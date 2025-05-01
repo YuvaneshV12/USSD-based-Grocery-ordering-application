@@ -11,6 +11,69 @@ categories = {
 
 cart = {}
 
+@app.route('/')
+def index():
+    return render_template_string('''
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>USSD Simulator</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    padding: 30px;
+                }
+                h2 {
+                    color: #333;
+                }
+                form {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    max-width: 400px;
+                    margin: auto;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                input[type="text"] {
+                    width: 100%;
+                    padding: 8px;
+                    margin: 10px 0;
+                    box-sizing: border-box;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+                input[type="submit"] {
+                    background-color: #28a745;
+                    color: white;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    width: 100%;
+                }
+                input[type="submit"]:hover {
+                    background-color: #218838;
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Simulate USSD Request</h2>
+            <form method="POST" action="/ussd">
+                Session ID:<br>
+                <input type="text" name="sessionId" value="12345"><br>
+                Service Code:<br>
+                <input type="text" name="serviceCode" value="*123#"><br>
+                Phone Number:<br>
+                <input type="text" name="phoneNumber" value="+1234567890"><br>
+                USSD Text:<br>
+                <input type="text" name="text"><br>
+                <input type="submit" value="Send USSD Request">
+            </form>
+        </body>
+        </html>
+    ''')
+
 @app.route('/ussd', methods=['POST'])
 def ussd():
     session_id = request.form.get('sessionId')
